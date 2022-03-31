@@ -32,10 +32,13 @@ private:
     void hole_clicked(int index);
 
     void play();
+    void decrease_health();
+    void check_game_over();
 
-    bool digletts[6] {true, false, false, false, true, true};
+    bool digletts[6] {false, false, false, false, false, false};
     int score = 0;
     int health = 3;
+    bool is_game_over = false;
 
     QLabel* holes[6];
 };

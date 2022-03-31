@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QThread>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -31,9 +32,18 @@ MainWindow::~MainWindow()
 
 void MainWindow::play()
 {
-    while (true) {
-        QThread::msleep(1000);
-        digletts[0] = true;
+    while (!is_game_over) {
+        QThread::msleep(rand() % 1000 + 750);
+
+        int i = rand() % 6;
+
+        if (digletts[i]) {
+            digletts[i] = false;
+            decrease_health();
+        } else {
+            digletts[i] = true;
+        }
+
         update_holes();
     }
 }
@@ -57,9 +67,23 @@ void MainWindow::hole_clicked(int index)
         digletts[index] = false;
     }
     else {
-        health--;
+        decrease_health();
     }
     update_holes();
+}
+
+void MainWindow::decrease_health()
+{
+    health--;
+    check_game_over();
+}
+
+void MainWindow::check_game_over()
+{
+    if (health <= 0) {
+        is_game_over = true;
+//        QMessageBox::critical(this, "game over!", "you died, looser!");
+    }
 }
 
 void MainWindow::on_hole1_clicked() { hole_clicked(0); }
