@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>diglett.png</file>
+        <file>rock.png</file>
+    </qresource>
+</RCC>
